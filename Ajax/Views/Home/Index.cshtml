@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section scripts {
+    <script>
+        function sendAjax(method, url, callback, progressCallback) {
+            // create XmlHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // add listener that fires when data is ready
+            if (callback) {
+                xhr.addEventListener('load', function (e) {
+                    callback(JSON.parse(xhr.responseText));
+                });
+            }
+            if (progressCallback) {
+                xhr.addEventListener('progress', function (e) {
+                    progressCallback(e);
+                });
+            }
+
+            // open and send the request
+            xhr.open(method, url);
+            xhr.send();
+        }
+
+        sendAjax('GET', '/products.json', function (data) {
+            console.dir(data);
+        });
+    </script>
+}
